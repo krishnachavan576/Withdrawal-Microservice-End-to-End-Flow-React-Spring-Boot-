@@ -1,0 +1,40 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bank
+    username: bank
+    password: bank
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+app:
+  seed-demo-data: true
+  cors-origin: http://localhost:5173
+  jwt:
+    secret: ${JWT_SECRET:dev-only-secret-change-me-dev-only-secret-change-me}
+    expiry-minutes: 30
+  withdrawal:
+    max-per-txn: 50000.00
+  reconcile:
+    interval-ms: 15000
+    pending-older-than-seconds: 30
+
+razorpay:
+  mock: ${RZP_MOCK:true}
+  key-id: ${RZP_KEY_ID:}
+  key-secret: ${RZP_KEY_SECRET:}
+  account-number: ${RZPX_ACCOUNT_NUMBER:}
+  webhook-secret: ${RZP_WEBHOOK_SECRET:dev-webhook-secret}
